@@ -1,17 +1,17 @@
 package classes;
 
 import classes.Enums.NaipeCarta;
-import classes.Enums.CodigoCarta;
+import classes.Enums.CartasSueca;
 
 public class Carta {
-    private CodigoCarta numero;
+    private CartasSueca numero;
     private NaipeCarta naipe;   
 
-    public CodigoCarta getNumero() {
+    public CartasSueca getNumero() {
         return numero;
     }
 
-    public void setNumero(CodigoCarta numero) {
+    public void setNumero(CartasSueca numero) {
         this.numero = numero;
     }
 
@@ -25,10 +25,10 @@ public class Carta {
 
     @Override
     public String toString() {
-        return "    --" + CodigoCarta.valueOf(numero.getCode())+ " de " +  NaipeCarta.valueOf(naipe.getCode());
+        return "    --" + CartasSueca.valueOf(numero.getCode())+ " DE " +  NaipeCarta.valueOf(naipe.getCode());
     }
 
-    public Carta(CodigoCarta numero, NaipeCarta naipe) {
+    public Carta(CartasSueca numero, NaipeCarta naipe) {
         this.numero = numero;
         this.naipe = naipe;
     }

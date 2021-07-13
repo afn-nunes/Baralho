@@ -1,19 +1,23 @@
-package classes;
+package app;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import classes.Enums.CodigoCarta;
+import classes.Carta;
+import classes.Enums.CartasSueca;
 import classes.Enums.NaipeCarta;
+import classes.Equipe;
+import classes.Jogador;
+import classes.MotorPartida;
 
-public class Partida {
+public class PartidaSueca implements MotorPartida{
     private int codigo;
     private List<Carta> baralho = new ArrayList<>();
     private List<Equipe> equipes = new ArrayList<>();
     private List<Jogador> jogadores = new ArrayList<>();
 
-    public List<Jogador> getJogadores() {
+    public List<Jogador> obterJogadores() {
         return jogadores;
     }
 
@@ -27,20 +31,16 @@ public class Partida {
         return baralho;
     }
 
-    public List<Equipe> getEquipe() {
+    public List<Equipe> obterEquipes() {
         return equipes;
     }
 
-    public Partida(int codigo) {
+    public PartidaSueca(int codigo) {
         this.codigo = codigo;
-        this.montarDeck();
-
-        getEquipe().add(new Equipe(1));
-        getEquipe().add(new Equipe(2));
     }
     
-    private void montarDeck() {
-        for (CodigoCarta codigoCarta : CodigoCarta.values()) {
+    public void montarDeck() {
+        for (CartasSueca codigoCarta : CartasSueca.values()) {
             for (NaipeCarta naipeCarta: NaipeCarta.values()) {                                
                 Carta carta = new Carta(codigoCarta, naipeCarta);
                 this.baralho.add(carta);

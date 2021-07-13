@@ -1,7 +1,7 @@
 package classes;
 
 public class Enums {
-    public enum CodigoCarta{
+    public enum CartasSueca{
         AZ(1), 
         DOIS(2), 
         TRES(3), 
@@ -9,16 +9,13 @@ public class Enums {
         CINCO(5), 
         SEIS(6), 
         SETE(7), 
-        OITO(8), 
-        NOVE(9), 
-        DEZ(10), 
         DAMA(11), 
         VALETE(12), 
         REI(13);
 
         private int code;
 
-        private CodigoCarta(int code){
+        private CartasSueca(int code){
             this.code = code;
         }
 
@@ -26,8 +23,8 @@ public class Enums {
             return code;
         }
 
-        public static CodigoCarta valueOf(int code){
-            for (CodigoCarta value : CodigoCarta.values()) {
+        public static CartasSueca valueOf(int code){
+            for (CartasSueca value : CartasSueca.values()) {
                if(value.getCode() == code) {
                    return value;
                }

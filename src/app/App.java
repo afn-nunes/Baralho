@@ -2,17 +2,21 @@ package app;
 import classes.Carta;
 import classes.Equipe;
 import classes.Jogador;
-import classes.Partida;
+import classes.MotorPartida;
 
 public class App {
     public static void main(String[] args) throws Exception {
         
-        Partida partida = new Partida(1); 
+        MotorPartida partida = new PartidaSueca(1);
+        partida.montarDeck();
 
-        partida.getJogadores().add(new Jogador(1, "André"));
-        partida.getJogadores().add(new Jogador(2, "Gaspar"));
-        partida.getJogadores().add(new Jogador(3, "Dario"));
-        partida.getJogadores().add(new Jogador(4, "Pinheiro")); 
+        partida.obterEquipes().add(new Equipe(1));
+        partida.obterEquipes().add(new Equipe(2));
+        
+        partida.obterJogadores().add(new Jogador(1, "André"));
+        partida.obterJogadores().add(new Jogador(2, "Gaspar"));
+        partida.obterJogadores().add(new Jogador(3, "Dario"));
+        partida.obterJogadores().add(new Jogador(4, "Pinheiro")); 
         
         partida.montarEquipes();
 
@@ -22,7 +26,7 @@ public class App {
 
         System.out.println(partida);
         
-        for (Equipe equipe : partida.getEquipe()) {
+        for (Equipe equipe : partida.obterEquipes()) {
              System.out.println(equipe + " - Participantes: \n");
              for (Jogador jogador : equipe.getJogador()) {
                  System.out.println(jogador);
