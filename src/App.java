@@ -1,31 +1,32 @@
-import java.util.ArrayList;
-import java.util.List;
-
 import classes.Carta;
-import classes.Enums.NaipeEnum;
-import classes.Enums.numeroEnum;
-import classes.Naipe;
-import classes.Numero;
+import classes.Equipe;
+import classes.Jogador;
+import classes.Partida;
 
 public class App {
     public static void main(String[] args) throws Exception {
+        
+        Partida partida = new Partida(1); 
 
-        List<Carta> baralho = new ArrayList<>();
-        for (numeroEnum numero : numeroEnum.values()) {
-            for (NaipeEnum naipe: NaipeEnum.values()) {
-                Numero c = new Numero(numero);
-                Naipe n = new Naipe(naipe);
-                
-                Carta carta = new Carta(c, n);
+        partida.getEquipe().add(new Equipe(1));
+        partida.getEquipe().add(new Equipe(2));
 
-                baralho.add(carta);
+        partida.getJogadores().add(new Jogador(1, "André"));
+        partida.getJogadores().add(new Jogador(2, "Gaspar"));
+        partida.getJogadores().add(new Jogador(3, "Dario"));
+        partida.getJogadores().add(new Jogador(4, "Pinheiro")); 
+        
+        partida.distribuirCartas();
+        limpartela();
+
+        for(Jogador jogador: partida.getJogadores()){
+            System.out.println(jogador);
+            for (Carta carta : jogador.getListaDeCartas()) {
+                System.out.println("---" + carta + "\n");
             }
         }
-        limpartela();
-        for (Carta carta : baralho) {
-            System.out.println(carta.toString());
-        }
     }
+
     private static void limpartela(){
         System.out.print("\033[H\033[2J");  
         System.out.flush(); 

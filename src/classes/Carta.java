@@ -1,30 +1,36 @@
 package classes;
 
+import classes.Enums.NaipeCarta;
+import classes.Enums.CodigoCarta;
+
 public class Carta {
-    public Numero numero;
-    public Naipe naipe;
-    
-    public Numero getCarta() {
+    private CodigoCarta numero;
+    private NaipeCarta naipe;   
+
+    public CodigoCarta getNumero() {
         return numero;
     }
-    public void setCarta(Numero carta) {
-        this.numero = carta;
+
+    public void setNumero(CodigoCarta numero) {
+        this.numero = numero;
     }
-    public Naipe getNaipe() {
+
+    public NaipeCarta getNaipe() {
         return naipe;
     }
-    public void setNaipe(Naipe naipe) {
-        this.naipe = naipe;
-    }
-    public Carta(Numero numero, Naipe naipe) {
-        this.numero = numero;
+
+    public void setNaipe(NaipeCarta naipe) {
         this.naipe = naipe;
     }
 
     @Override
     public String toString() {
-        return numero.getTipo() + " de " +  naipe.getTipo();
+        return CodigoCarta.valueOf(numero.getCode())+ " de " +  NaipeCarta.valueOf(naipe.getCode());
     }
 
+    public Carta(CodigoCarta numero, NaipeCarta naipe) {
+        this.numero = numero;
+        this.naipe = naipe;
+    }
 
 }
