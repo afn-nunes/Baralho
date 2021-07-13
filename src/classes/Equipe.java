@@ -1,11 +1,12 @@
 package classes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Equipe {
     private int pontuacao;
     private int codigo;
-    private List<Jogador> jogador;
+    private List<Jogador> jogador = new ArrayList<>();    
      
     public int getPontuacao() {
         return pontuacao;
@@ -34,5 +35,11 @@ public class Equipe {
 
     public Equipe(int codigo) {
         this.codigo = codigo;
-    }    
+    }
+    @Override
+    public String toString() {        
+        return "Equipe: " + codigo + " - Pontuação: " + getPontuacao();        
+    }
+
+    
 }

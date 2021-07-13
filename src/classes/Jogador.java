@@ -51,7 +51,7 @@ public class Jogador{
 
     @Override
     public String toString() {
-        return "Jogador: " + nome + ", cartas: " + "\n";
+        return " -- " + nome;
     }
 
     

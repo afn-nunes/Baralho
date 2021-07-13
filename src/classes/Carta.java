@@ -25,7 +25,7 @@ public class Carta {
 
     @Override
     public String toString() {
-        return CodigoCarta.valueOf(numero.getCode())+ " de " +  NaipeCarta.valueOf(naipe.getCode());
+        return "    --" + CodigoCarta.valueOf(numero.getCode())+ " de " +  NaipeCarta.valueOf(naipe.getCode());
     }
 
     public Carta(CodigoCarta numero, NaipeCarta naipe) {

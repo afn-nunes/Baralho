@@ -10,7 +10,7 @@ import classes.Enums.NaipeCarta;
 public class Partida {
     private int codigo;
     private List<Carta> baralho = new ArrayList<>();
-    private List<Equipe> equipe = new ArrayList<>();
+    private List<Equipe> equipes = new ArrayList<>();
     private List<Jogador> jogadores = new ArrayList<>();
 
     public List<Jogador> getJogadores() {
@@ -28,12 +28,15 @@ public class Partida {
     }
 
     public List<Equipe> getEquipe() {
-        return equipe;
+        return equipes;
     }
 
     public Partida(int codigo) {
         this.codigo = codigo;
         this.montarDeck();
+
+        getEquipe().add(new Equipe(1));
+        getEquipe().add(new Equipe(2));
     }
     
     private void montarDeck() {
@@ -55,5 +58,19 @@ public class Partida {
                 i++;
             }
         }
+    }
+
+    public void montarEquipes(){
+        Collections.shuffle(jogadores);
+        int i = 0;        
+        for (int j = 0; j < jogadores.size(); j++) { 
+            equipes.get(j %2).getJogador().add(jogadores.get(i));
+            jogadores.get(i) .setEquipe(equipes.get(j %2));
+            i++;            
+        }
+    }
+
+    public String toString(){
+        return "************ PARTIDA " + getCodigo() + "************\n" ;        
     }
 }
