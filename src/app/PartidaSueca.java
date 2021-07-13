@@ -13,32 +13,27 @@ import classes.MotorPartida;
 
 public class PartidaSueca implements MotorPartida{
     private int codigo;
-    private List<Carta> baralho = new ArrayList<>();
-    private List<Equipe> equipes = new ArrayList<>();
-    private List<Jogador> jogadores = new ArrayList<>();
+    private List<Carta> baralho;
+    private List<Equipe> equipes;
+    private List<Jogador> jogadores;
 
+    public PartidaSueca(int codigo) {
+       this.codigo = codigo;
+       baralho = new ArrayList<>();
+       equipes = new ArrayList<>();
+       jogadores = new ArrayList<>();
+    }
+
+    @Override
     public List<Jogador> obterJogadores() {
         return jogadores;
     }
-
-    public int getCodigo() {
-        return codigo;
-    }
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-    public List<Carta> getBaralho() {
-        return baralho;
-    }
-
+    @Override
     public List<Equipe> obterEquipes() {
         return equipes;
     }
 
-    public PartidaSueca(int codigo) {
-        this.codigo = codigo;
-    }
-    
+    @Override
     public void montarDeck() {
         for (CartasSueca codigoCarta : CartasSueca.values()) {
             for (NaipeCarta naipeCarta: NaipeCarta.values()) {                                
@@ -49,6 +44,7 @@ public class PartidaSueca implements MotorPartida{
         Collections.shuffle(this.baralho);
     }
 
+    @Override
     public void distribuirCartas(){
         int i = 0;
 
@@ -60,6 +56,7 @@ public class PartidaSueca implements MotorPartida{
         }
     }
 
+    @Override
     public void montarEquipes(){
         Collections.shuffle(jogadores);
         int i = 0;        
@@ -68,6 +65,13 @@ public class PartidaSueca implements MotorPartida{
             jogadores.get(i) .setEquipe(equipes.get(j %2));
             i++;            
         }
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public String toString(){
