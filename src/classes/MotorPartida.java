@@ -10,5 +10,6 @@ public interface MotorPartida {
     public void montarDeck() ;
     public void distribuirCartas();
     public void montarEquipes();
+    public void iniciarjogo();
 
 }

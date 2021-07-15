@@ -6,11 +6,20 @@ import classes.Enums.CartasSueca;
 public class Carta {
     private CartasSueca numero;
     private NaipeCarta naipe;   
-
+    private int pontuacao;
+    
     public CartasSueca getNumero() {
         return numero;
     }
+public int getPontuacao() {
+        return pontuacao;
+    }
 
+    public void setPontuacao(int pontuacao) {
+        this.pontuacao = pontuacao;
+    }
+
+    
     public void setNumero(CartasSueca numero) {
         this.numero = numero;
     }
