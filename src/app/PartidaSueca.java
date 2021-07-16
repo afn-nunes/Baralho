@@ -159,6 +159,8 @@ public class PartidaSueca implements MotorPartida{
                 sc.nextLine();
 
                 rodada.getJogador().get(indiceJogador).setCartaDoTurno(rodada.getJogadorDoTurno().getListaDeCartas().get(codigo -1));
+                jogadores.get(jogadores.indexOf(rodada.getJogadorDoTurno())).
+                                getListaDeCartas().remove(rodada.getJogadorDoTurno().getListaDeCartas().get(codigo -1));
                 Funcoes.limparTela();
             }
 
@@ -168,12 +170,16 @@ public class PartidaSueca implements MotorPartida{
         sc.close();
     }
 
-    private void imprimirMesa(){
-        for (Jogador jogador : jogadores) {
-            if (jogador.getCartaDoTurno() ==null)
-                System.out.println(jogador);
-            else
-                System.out.println(jogador + " - " + jogador.getCartaDoTurno());    
+    private void imprimirMesa(){    
+        for (Equipe equipe : equipes) {
+            System.out.println(equipe + "\n");
+            for (Jogador jogador : equipe.getJogador()) {
+                if (jogador.getCartaDoTurno() ==null)
+                    System.out.println(jogador);
+                else
+                    System.out.println(jogador + " - " + jogador.getCartaDoTurno());    
+            }
+            System.out.println();
         }
         System.out.println("\n");
     }
