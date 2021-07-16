@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -24,8 +25,6 @@ public class PartidaSueca implements MotorPartida{
     private List<Carta> baralho;
     private List<Equipe> equipes;
     private List<Jogador> jogadores;
-    private List<Rodada> rodadas = new ArrayList<>();
-
     
      private NaipeCarta cartaTrunfo;
 
@@ -132,37 +131,50 @@ public class PartidaSueca implements MotorPartida{
 
     public void iniciarjogo(){
         Scanner sc = new Scanner(System.in);        
-
         for (int i = 0; i < getNumeroRodadas();i++) {            
-            Funcoes.limparTela();           
-            imprimirMesa(
-                jogadores.get(0).getNome(), 
-                jogadores.get(1).getNome(), 
-                jogadores.get(2).getNome(),
-                jogadores.get(3).getNome()); 
 
-            Rodada rodada = new Rodada(i + 1);
+            Rodada rodada = new Rodada(i + 1,  Arrays.asList( jogadores.get(0),  jogadores.get(1),  jogadores.get(2),  jogadores.get(3)));
             
-            rodada.getJogador().add( jogadores.get(0));
-            rodada.getJogador().add( jogadores.get(1));
-            rodada.getJogador().add( jogadores.get(2));
-            rodada.getJogador().add( jogadores.get(3));
+            for (Jogador jogador : jogadores) {
+                jogador.setCartaDoTurno(null);
+            }
 
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 4; j++) {                
+                imprimirMesa(); 
+
                 rodada.setTurno(j + 1); 
-                rodada.setJogadorDoTurno();
+                rodada.setJogadorDoTurno();                                
+                int indiceJogador = rodada.getJogador().indexOf(rodada.getJogadorDoTurno());
+                System.out.printf("Rodada: %s - Turno: %s - Jogador: %s \n",  rodada.getNumero(),  rodada.getTurno(),  rodada.getJogadorDoTurno());
+                sc.nextLine();
+                
+                Funcoes.limparTela();
+                imprimirMesa();
+                System.out.printf("%s - Informe o código da carta: \n",  rodada.getJogadorDoTurno());
+                rodada.getJogador().get(indiceJogador).
+                            getListaDeCartas().
+                            stream().forEach(c -> System.out.println((int )(rodada.getJogador().get(indiceJogador).getListaDeCartas().indexOf(c)  + 1 ) + " - " + c));
+                            
+                int codigo = sc.nextInt();
+                sc.nextLine();
 
-                System.out.printf("Rodada: %s - Turno: %s - Jogador: %s \n",  rodada.getNumero(),  rodada.getTurno(), rodada.getJogadorDoTurno());                                  
-                sc.nextLine();      
-            }     
-            rodadas.add(rodada);
+                rodada.getJogador().get(indiceJogador).setCartaDoTurno(rodada.getJogadorDoTurno().getListaDeCartas().get(codigo -1));
+                Funcoes.limparTela();
+            }
+
             Funcoes.limparTela();  
         }    
                 
         sc.close();
     }
 
-    private void imprimirMesa(String jogador1, String jogador2, String jogador3,  String jogador4){
-        System.out.printf(String.format("%s\n %s\n %s\n %s\n", jogador1, jogador2, jogador3, jogador4));        
+    private void imprimirMesa(){
+        for (Jogador jogador : jogadores) {
+            if (jogador.getCartaDoTurno() ==null)
+                System.out.println(jogador);
+            else
+                System.out.println(jogador + " - " + jogador.getCartaDoTurno());    
+        }
+        System.out.println("\n");
     }
 }

@@ -1,4 +1,5 @@
 package app;
+import classes.Funcoes;
 import classes.Jogador;
 import classes.MotorPartida;
 
@@ -16,6 +17,7 @@ public class App {
 
         partida.distribuirCartas();      
 
+        Funcoes.limparTela();
         System.out.println(partida);
         
         partida.iniciarjogo();

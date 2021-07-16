@@ -33,8 +33,8 @@ public int getPontuacao() {
     }
 
     @Override
-    public String toString() {
-        return "    --" + CartasSueca.valueOf(numero.getCode())+ " DE " +  NaipeCarta.valueOf(naipe.getCode());
+    public String toString() {        
+        return CartasSueca.valueOf(numero.getCode())+ " DE " +  NaipeCarta.valueOf(naipe.getCode());
     }
 
     public Carta(CartasSueca numero, NaipeCarta naipe) {

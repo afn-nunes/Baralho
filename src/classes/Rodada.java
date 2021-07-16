@@ -13,10 +13,24 @@ public class Rodada {
     private List<Jogador> jogadores = new ArrayList<>();    
     private List<Carta> cartas = new ArrayList<>();
     private Jogador JogadorDoTurno;
+    private Carta cartadoTurno;
+
+    public void setJogadorDoTurno(Jogador jogadorDoTurno) {
+        JogadorDoTurno = jogadorDoTurno;
+    }
+
+    public Carta getCartadoTurno() {
+        return cartadoTurno;
+    }
+
+    public void setCartadoTurno(Carta cartadoTurno) {
+        this.cartadoTurno = cartadoTurno;
+    }
 
     public Jogador getJogadorDoTurno() {
         return JogadorDoTurno;
     }
+
     public void setJogadorDoTurno() {
         if ((getNumero() == 1) &&(getTurno() ==1)){
             this.JogadorDoTurno = (getJogador().get((int) Math.random() * 4));        
@@ -69,8 +83,10 @@ public class Rodada {
     public void setPontuacao(int pontuacao) {
         this.pontuacao = pontuacao;
     }
-    public Rodada(int numero) {
+    public Rodada(int numero,  List<Jogador> jogadores) {
         this.numero = numero;
+        this.jogadores = jogadores;
+
     }
   
 }

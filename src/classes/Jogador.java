@@ -8,8 +8,14 @@ public class Jogador{
     private String nome;
     private Equipe equipe;
     private List<Carta> listaDeCartas = new ArrayList<>();
-
+    private Carta cartaDoTurno;
     
+    public Carta getCartaDoTurno() {
+        return cartaDoTurno;
+    }
+    public void setCartaDoTurno(Carta cartaDoTurno) {
+        this.cartaDoTurno = cartaDoTurno;
+    }
     public Equipe getEquipe() {
         return equipe;
     }
@@ -43,7 +49,7 @@ public class Jogador{
 
     @Override
     public String toString() {
-        return " -- " + nome;
+        return nome;
     }
 
     
