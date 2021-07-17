@@ -130,39 +130,17 @@ public class PartidaSueca implements MotorPartida{
     }
 
     public void iniciarjogo(){
-        Scanner sc = new Scanner(System.in);        
+        Scanner sc = new Scanner(System.in);          
         for (int i = 0; i < getNumeroRodadas();i++) {            
 
             Rodada rodada = new Rodada(i + 1,  Arrays.asList( jogadores.get(0),  jogadores.get(1),  jogadores.get(2),  jogadores.get(3)));
-            
+            rodada.setPartida(this);
+
             for (Jogador jogador : jogadores) {
                 jogador.setCartaDoTurno(null);
             }
-
-            for (int j = 0; j < 4; j++) {                
-                imprimirMesa(); 
-
-                rodada.setTurno(j + 1); 
-                rodada.setJogadorDoTurno();                                
-                int indiceJogador = rodada.getJogador().indexOf(rodada.getJogadorDoTurno());
-                System.out.printf("Rodada: %s - Turno: %s - Jogador: %s \n",  rodada.getNumero(),  rodada.getTurno(),  rodada.getJogadorDoTurno());
-                sc.nextLine();
-                
-                Funcoes.limparTela();
-                imprimirMesa();
-                System.out.printf("%s - Informe o código da carta: \n",  rodada.getJogadorDoTurno());
-                rodada.getJogador().get(indiceJogador).
-                            getListaDeCartas().
-                            stream().forEach(c -> System.out.println((int )(rodada.getJogador().get(indiceJogador).getListaDeCartas().indexOf(c)  + 1 ) + " - " + c));
-                            
-                int codigo = sc.nextInt();
-                sc.nextLine();
-
-                rodada.getJogador().get(indiceJogador).setCartaDoTurno(rodada.getJogadorDoTurno().getListaDeCartas().get(codigo -1));
-                jogadores.get(jogadores.indexOf(rodada.getJogadorDoTurno())).
-                                getListaDeCartas().remove(rodada.getJogadorDoTurno().getListaDeCartas().get(codigo -1));
-                Funcoes.limparTela();
-            }
+            
+            rodada.iniciarRodada(sc);
 
             Funcoes.limparTela();  
         }    
@@ -170,9 +148,9 @@ public class PartidaSueca implements MotorPartida{
         sc.close();
     }
 
-    private void imprimirMesa(){    
+    public void imprimirMesa(){    
         for (Equipe equipe : equipes) {
-            System.out.println(equipe + "\n");
+            System.out.println(equipe);
             for (Jogador jogador : equipe.getJogador()) {
                 if (jogador.getCartaDoTurno() ==null)
                     System.out.println(jogador);

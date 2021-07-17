@@ -1,30 +1,45 @@
 package classes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import app.PartidaSueca;
 import classes.Enums.NaipeCarta;
 
 public class Rodada {
-    private int numero;
-    private PartidaSueca partida;    
+    private int numero;        
     private int turno;
     private List<Jogador> jogadores = new ArrayList<>();    
     private List<Carta> cartas = new ArrayList<>();
+    private List<Integer> turnos = Arrays.asList(1,2,3,4);
     private Jogador JogadorDoTurno;
     private Carta cartadoTurno;
-
-    public void setJogadorDoTurno(Jogador jogadorDoTurno) {
-        JogadorDoTurno = jogadorDoTurno;
+    private int pontuacao;
+    private NaipeCarta naipe;
+    private PartidaSueca partida;
+   
+    public int getNumero() {
+        return numero;
+    }
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
-    public Carta getCartadoTurno() {
-        return cartadoTurno;
+    public int getTurno() {
+        return turno;
+    }
+    public void setTurno(int turno) {
+        this.turno = turno;
     }
 
-    public void setCartadoTurno(Carta cartadoTurno) {
-        this.cartadoTurno = cartadoTurno;
+    public List<Jogador> getJogador() {
+        return jogadores;
+    }
+
+    public List<Carta> getCarta() {
+        return cartas;
     }
 
     public Jogador getJogadorDoTurno() {
@@ -39,42 +54,14 @@ public class Rodada {
         }else{
             this.JogadorDoTurno = getJogador().get(getJogador().indexOf(JogadorDoTurno) + 1);
         }
-
     }
 
-    private int pontuacao;
-    private NaipeCarta naipe;
-
-    public NaipeCarta getNaipe() {
-        return naipe;
-    }
-    public void setNaipe(NaipeCarta naipe) {
-        this.naipe = naipe;
-    }
-    public int getNumero() {
-        return numero;
-    }
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-    public PartidaSueca getPartida() {
-        return partida;
-    }
-    public void setPartida(PartidaSueca partida) {
-        this.partida = partida;
-    }
-    public int getTurno() {
-        return turno;
-    }
-    public void setTurno(int turno) {
-        this.turno = turno;
-    }
-    public List<Jogador> getJogador() {
-        return jogadores;
+    public Carta getCartadoTurno() {
+        return cartadoTurno;
     }
 
-    public List<Carta> getCarta() {
-        return cartas;
+    public void setCartadoTurno(Carta cartadoTurno) {
+        this.cartadoTurno = cartadoTurno;
     }
 
     public int getPontuacao() {
@@ -83,10 +70,47 @@ public class Rodada {
     public void setPontuacao(int pontuacao) {
         this.pontuacao = pontuacao;
     }
+
+    public NaipeCarta getNaipe() {
+        return naipe;
+    }
+    public void setNaipe(NaipeCarta naipe) {
+        this.naipe = naipe;
+    }
+
+    public PartidaSueca getPartida() {
+        return partida;
+    }
+    public void setPartida(PartidaSueca partida) {
+        this.partida = partida;
+    }
+
     public Rodada(int numero,  List<Jogador> jogadores) {
         this.numero = numero;
         this.jogadores = jogadores;
 
     }
   
+    public void iniciarRodada(Scanner sc){
+        turnos.forEach(turno ->{        
+            Funcoes.limparTela();                               
+            setTurno(turno); 
+            setJogadorDoTurno();                                
+            int indiceJogador = getJogador().indexOf(getJogadorDoTurno());
+
+            System.out.println(partida);
+            partida.imprimirMesa();
+            System.out.printf("Rodada: %s - Turno: %s - Jogador: %s \n\n",  getNumero(),  getTurno(),  getJogadorDoTurno());                                                            
+            System.out.printf("%s - Informe o código da carta: \n",  getJogadorDoTurno());
+
+            getJogador().get(indiceJogador).getListaDeCartas().
+                        stream().forEach(c -> System.out.println((int )(getJogador().get(indiceJogador).getListaDeCartas().indexOf(c)  + 1 ) + " - " + c));
+                        
+            int codigo = sc.nextInt();
+            sc.nextLine();
+
+            getJogador().get(indiceJogador).setCartaDoTurno(getJogadorDoTurno().getListaDeCartas().get(codigo -1));
+            jogadores.get(jogadores.indexOf(getJogadorDoTurno())).getListaDeCartas().remove(getJogadorDoTurno().getListaDeCartas().get(codigo -1));                
+        });
+    }
 }
