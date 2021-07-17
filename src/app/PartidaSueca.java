@@ -1,7 +1,6 @@
 package app;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -18,16 +17,20 @@ import classes.Rodada;
 public class PartidaSueca implements MotorPartida{    
     private int codigo; 
     private int numeroRodadas;
+    private NaipeCarta cartaTrunfo;
+
+    private List<Carta> baralho = new ArrayList<>();
+    private List<Equipe> equipes= new ArrayList<>();
+    private List<Jogador> jogadores = new ArrayList<>(); 
+    private List<Rodada> rodadas = new ArrayList<>();
+
+     public List<Rodada> getRodadas() {
+        return rodadas;
+    }
+
     public int getNumeroRodadas() {
         return numeroRodadas;
     }
-
-    private List<Carta> baralho;
-    private List<Equipe> equipes;
-    private List<Jogador> jogadores;
-    
-     private NaipeCarta cartaTrunfo;
-
     public NaipeCarta getCartaTrunfo() {
         return cartaTrunfo;
     }
@@ -45,11 +48,7 @@ public class PartidaSueca implements MotorPartida{
 
     public PartidaSueca(int codigo) {
        this.codigo = codigo;
-       this.numeroRodadas = 10;
-       baralho = new ArrayList<>();
-       equipes = new ArrayList<>();
-       jogadores = new ArrayList<>(); 
-       
+       this.numeroRodadas = 10;      
        montarDeck();
 
        obterEquipes().add(new Equipe(1));
@@ -130,17 +129,18 @@ public class PartidaSueca implements MotorPartida{
     }
 
     public void iniciarjogo(){
-        Scanner sc = new Scanner(System.in);          
-        for (int i = 0; i < getNumeroRodadas();i++) {            
+        Scanner sc = new Scanner(System.in);
 
-            Rodada rodada = new Rodada(i + 1,  Arrays.asList( jogadores.get(0),  jogadores.get(1),  jogadores.get(2),  jogadores.get(3)));
-            rodada.setPartida(this);
-
+        while (rodadas.size() < 10){        
             for (Jogador jogador : jogadores) {
                 jogador.setCartaDoTurno(null);
             }
             
-            rodada.iniciarRodada(sc);
+            Rodada rodada = new Rodada(jogadores);
+            rodadas.add(rodada);
+
+            rodada.setPartida(this);
+            rodada.iniciar(sc);
 
             Funcoes.limparTela();  
         }    

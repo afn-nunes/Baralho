@@ -8,8 +8,7 @@ import java.util.Scanner;
 import app.PartidaSueca;
 import classes.Enums.NaipeCarta;
 
-public class Rodada {
-    private int numero;        
+public class Rodada {          
     private int turno;
     private List<Jogador> jogadores = new ArrayList<>();    
     private List<Carta> cartas = new ArrayList<>();
@@ -19,13 +18,6 @@ public class Rodada {
     private int pontuacao;
     private NaipeCarta naipe;
     private PartidaSueca partida;
-   
-    public int getNumero() {
-        return numero;
-    }
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
 
     public int getTurno() {
         return turno;
@@ -47,7 +39,7 @@ public class Rodada {
     }
 
     public void setJogadorDoTurno() {
-        if ((getNumero() == 1) &&(getTurno() ==1)){
+        if ((partida.getRodadas().indexOf(this)) == 0 &&(getTurno() ==1)){
             this.JogadorDoTurno = (getJogador().get((int) Math.random() * 4));        
         }else if((this.JogadorDoTurno != null) && getJogador().indexOf(JogadorDoTurno) == 3){
             this.JogadorDoTurno = getJogador().get(0);
@@ -85,32 +77,31 @@ public class Rodada {
         this.partida = partida;
     }
 
-    public Rodada(int numero,  List<Jogador> jogadores) {
-        this.numero = numero;
+    public Rodada(List<Jogador> jogadores) {        
         this.jogadores = jogadores;
 
     }
   
-    public void iniciarRodada(Scanner sc){
+    public void iniciar(Scanner sc){
         turnos.forEach(turno ->{        
             Funcoes.limparTela();                               
             setTurno(turno); 
-            setJogadorDoTurno();                                
+            setJogadorDoTurno();
             int indiceJogador = getJogador().indexOf(getJogadorDoTurno());
+            List<Carta> cartas = getJogador().get(indiceJogador).getListaDeCartas();
 
             System.out.println(partida);
             partida.imprimirMesa();
-            System.out.printf("Rodada: %s - Turno: %s - Jogador: %s \n\n",  getNumero(),  getTurno(),  getJogadorDoTurno());                                                            
+            System.out.printf("Rodada: %s - Turno: %s - Jogador: %s \n\n",  partida.getRodadas().indexOf(this) + 1,  getTurno(),  getJogadorDoTurno());                                                            
             System.out.printf("%s - Informe o código da carta: \n",  getJogadorDoTurno());
 
-            getJogador().get(indiceJogador).getListaDeCartas().
-                        stream().forEach(c -> System.out.println((int )(getJogador().get(indiceJogador).getListaDeCartas().indexOf(c)  + 1 ) + " - " + c));
+            cartas.stream().forEach(c -> System.out.println((int )(cartas.indexOf(c)  + 1 ) + " - " + c));
                         
             int codigo = sc.nextInt();
             sc.nextLine();
 
-            getJogador().get(indiceJogador).setCartaDoTurno(getJogadorDoTurno().getListaDeCartas().get(codigo -1));
-            jogadores.get(jogadores.indexOf(getJogadorDoTurno())).getListaDeCartas().remove(getJogadorDoTurno().getListaDeCartas().get(codigo -1));                
+            getJogador().get(indiceJogador).setCartaDoTurno(cartas.get(codigo -1));
+            cartas.remove(cartas.get(codigo -1)); 
         });
     }
 }
