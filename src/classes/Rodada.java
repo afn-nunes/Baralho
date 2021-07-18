@@ -15,10 +15,18 @@ public class Rodada {
     private List<Integer> turnos = Arrays.asList(1,2,3,4);
     private Jogador JogadorDoTurno;
     private Carta cartadoTurno;
+    private Carta maiorCarta;
     private int pontuacao;
     private NaipeCarta naipe;
     private PartidaSueca partida;
 
+    
+    public Carta getMaiorCarta() {
+        return maiorCarta;
+    }
+    public void setMaiorCarta(Carta maiorCarta) {
+        this.maiorCarta = maiorCarta;
+    }
     public int getTurno() {
         return turno;
     }
@@ -101,6 +109,12 @@ public class Rodada {
             sc.nextLine();
 
             getJogador().get(indiceJogador).setCartaDoTurno(cartas.get(codigo -1));
+            setPontuacao(getPontuacao() + cartas.get(codigo -1).getPontuacao());
+            
+            if((maiorCarta ==null)||(cartas.get(codigo -1).getPontuacao() > maiorCarta.getPontuacao())){
+                setMaiorCarta(cartas.get(codigo -1));
+                partida.setJogadorProximaRodada( getJogadorDoTurno());
+            };
             cartas.remove(cartas.get(codigo -1)); 
         });
     }

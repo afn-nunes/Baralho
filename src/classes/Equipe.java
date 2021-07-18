@@ -24,7 +24,7 @@ public class Equipe {
         this.jogador = jogador;
     }
     public void setPontuacao(int pontuacao) {
-        this.pontuacao = pontuacao;
+        this.pontuacao += pontuacao;
     }
     public int getcodigo() {
         return codigo;

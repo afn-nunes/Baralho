@@ -18,13 +18,21 @@ public class PartidaSueca implements MotorPartida{
     private int codigo; 
     private int numeroRodadas;
     private NaipeCarta cartaTrunfo;
-
+    private Jogador jogadorProximaRodada;    
     private List<Carta> baralho = new ArrayList<>();
     private List<Equipe> equipes= new ArrayList<>();
     private List<Jogador> jogadores = new ArrayList<>(); 
-    private List<Rodada> rodadas = new ArrayList<>();
+    private List<Rodada> rodadas = new ArrayList<>();    
 
-     public List<Rodada> getRodadas() {
+     public Jogador getJogadorProximaRodada() {
+        return jogadorProximaRodada;
+    }
+
+    public void setJogadorProximaRodada(Jogador jogador) {
+        this.jogadorProximaRodada = jogador;
+    }
+
+    public List<Rodada> getRodadas() {
         return rodadas;
     }
 
@@ -132,16 +140,23 @@ public class PartidaSueca implements MotorPartida{
         Scanner sc = new Scanner(System.in);
 
         while (rodadas.size() < 10){        
-            for (Jogador jogador : jogadores) {
-                jogador.setCartaDoTurno(null);
-            }
-            
             Rodada rodada = new Rodada(jogadores);
             rodadas.add(rodada);
 
+            for (Jogador jogador : rodada.getJogador()) {
+                jogador.setCartaDoTurno(null);
+            }
+            
             rodada.setPartida(this);
             rodada.iniciar(sc);
+            equipes.get(equipes.indexOf(getJogadorProximaRodada().getEquipe())).setPontuacao(rodada.getPontuacao());
 
+            Funcoes.limparTela(); 
+            imprimirMesa();
+            
+            System.out.printf("Jogador com maior carta: %s\n", getJogadorProximaRodada());            
+            System.out.printf("Pontuação da rodada: %s", rodada.getPontuacao());
+            sc.nextLine();
             Funcoes.limparTela();  
         }    
                 
