@@ -47,8 +47,8 @@ public class Rodada {
     }
 
     public void setJogadorDoTurno() {
-        if ((partida.getRodadas().indexOf(this)) == 0 &&(getTurno() ==1)){
-            this.JogadorDoTurno = (getJogador().get((int) Math.random() * 4));        
+        if (getTurno() ==1){
+            this.JogadorDoTurno = partida.getJogadorProximaRodada();
         }else if((this.JogadorDoTurno != null) && getJogador().indexOf(JogadorDoTurno) == 3){
             this.JogadorDoTurno = getJogador().get(0);
         }else{
@@ -93,29 +93,49 @@ public class Rodada {
     public void iniciar(Scanner sc){
         turnos.forEach(turno ->{        
             Funcoes.limparTela();                               
-            setTurno(turno); 
+            setTurno(turno);
+
+            if((partida.getRodadas().indexOf(this) == 0) && (getTurno() == 1)){
+                partida.setJogadorProximaRodada(getJogador().get((int) Math.random() * 4));
+            }
+
             setJogadorDoTurno();
+
             int indiceJogador = getJogador().indexOf(getJogadorDoTurno());
             List<Carta> cartas = getJogador().get(indiceJogador).getListaDeCartas();
+
+            if((partida.getRodadas().indexOf(this) == 0) && (getTurno() == 1)){
+                partida.setCartaTrunfo(cartas.get((int) Math.random() * cartas.size()).getNaipe());
+            }
+
+            
 
             System.out.println(partida);
             partida.imprimirMesa();
             System.out.printf("Rodada: %s - Turno: %s - Jogador: %s \n\n",  partida.getRodadas().indexOf(this) + 1,  getTurno(),  getJogadorDoTurno());                                                            
             System.out.printf("%s - Informe o código da carta: \n",  getJogadorDoTurno());
 
-            cartas.stream().forEach(c -> System.out.println((int )(cartas.indexOf(c)  + 1 ) + " - " + c));
-                        
-            int codigo = sc.nextInt();
+            if((turno == 1)||(!(cartas.stream().anyMatch(c -> c.getNaipe() == getNaipe())))){
+                cartas.stream().forEach(c -> System.out.println((int )(cartas.indexOf(c)  + 1 ) + " - " + c));
+            }else {
+                cartas.stream().filter(c -> c.getNaipe() == getNaipe()).forEach(c -> System.out.println((int )(cartas.indexOf(c)  + 1 ) + " - " + c));
+            }
+            
+            int codigo = sc.nextInt() -1;
             sc.nextLine();
 
-            getJogador().get(indiceJogador).setCartaDoTurno(cartas.get(codigo -1));
-            setPontuacao(getPontuacao() + cartas.get(codigo -1).getPontuacao());
+            getJogador().get(indiceJogador).setCartaDoTurno(cartas.get(codigo));
+            setPontuacao(getPontuacao() + cartas.get(codigo).getPontuacao());
             
-            if((maiorCarta ==null)||(cartas.get(codigo -1).getPontuacao() > maiorCarta.getPontuacao())){
-                setMaiorCarta(cartas.get(codigo -1));
+            if(turno == 1){
+                setNaipe(cartas.get(codigo).getNaipe());
+            }
+
+            if((maiorCarta ==null)||(cartas.get(codigo).getPontuacao() > maiorCarta.getPontuacao())){
+                setMaiorCarta(cartas.get(codigo));
                 partida.setJogadorProximaRodada( getJogadorDoTurno());
             };
-            cartas.remove(cartas.get(codigo -1)); 
+            cartas.remove(cartas.get(codigo)); 
         });
     }
 }

@@ -133,7 +133,7 @@ public class PartidaSueca implements MotorPartida{
     }
 
     public String toString(){
-        return "************ PARTIDA " + getCodigo() + "************\n" ;        
+        return "************ PARTIDA " + getCodigo() + " - Trunfo: " + getCartaTrunfo() + "************\n" ;        
     }
 
     public void iniciarjogo(){
@@ -149,6 +149,7 @@ public class PartidaSueca implements MotorPartida{
             
             rodada.setPartida(this);
             rodada.iniciar(sc);
+
             equipes.get(equipes.indexOf(getJogadorProximaRodada().getEquipe())).setPontuacao(rodada.getPontuacao());
 
             Funcoes.limparTela(); 
