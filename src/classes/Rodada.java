@@ -16,11 +16,19 @@ public class Rodada {
     private Jogador JogadorDoTurno;
     private Carta cartadoTurno;
     private Carta maiorCarta;
+    private Carta cartaDeCorte;
     private int pontuacao;
     private NaipeCarta naipe;
     private PartidaSueca partida;
 
     
+    public Carta getCartaDeCorte() {
+        return cartaDeCorte;
+    }
+    public void setCartaDeCorte(Carta cartaDeCorte) {
+        this.cartaDeCorte = cartaDeCorte;
+    }
+
     public Carta getMaiorCarta() {
         return maiorCarta;
     }
@@ -68,7 +76,7 @@ public class Rodada {
         return pontuacao;
     }
     public void setPontuacao(int pontuacao) {
-        this.pontuacao = pontuacao;
+        this.pontuacao += pontuacao;
     }
 
     public NaipeCarta getNaipe() {
@@ -89,7 +97,26 @@ public class Rodada {
         this.jogadores = jogadores;
 
     }
-  
+    public void validarVencedorRodada(Carta cartaJogada){
+        if(turno == 1){
+            setNaipe(cartaJogada.getNaipe());
+            setMaiorCarta(cartaJogada);
+            if(cartaJogada.getNaipe() == partida.getCartaTrunfo()){
+                setCartaDeCorte(cartaJogada);
+            }
+            partida.setJogadorProximaRodada( getJogadorDoTurno());
+        }else if( (cartaJogada.getNaipe() == partida.getCartaTrunfo()) && (getCartaDeCorte() == null)){
+            setCartaDeCorte(cartaJogada);
+            partida.setJogadorProximaRodada(getJogadorDoTurno());                    
+        }else if( (cartaJogada.getNaipe() == partida.getCartaTrunfo()) && (cartaJogada.getPontuacao() > cartaDeCorte.getPontuacao())){
+            setCartaDeCorte(cartaJogada);
+            partida.setJogadorProximaRodada(getJogadorDoTurno()); 
+        } else if (cartaJogada.getNaipe() == this.getNaipe() && (cartaJogada.getPontuacao() > getMaiorCarta().getPontuacao())){
+            setMaiorCarta(cartaJogada);
+            partida.setJogadorProximaRodada( getJogadorDoTurno());                    
+        }    
+    }
+    
     public void iniciar(Scanner sc){
         turnos.forEach(turno ->{        
             Funcoes.limparTela();                               
@@ -122,20 +149,13 @@ public class Rodada {
             }
             
             int codigo = sc.nextInt() -1;
+            Carta cartaJogada = cartas.get(codigo);
             sc.nextLine();
 
-            getJogador().get(indiceJogador).setCartaDoTurno(cartas.get(codigo));
-            setPontuacao(getPontuacao() + cartas.get(codigo).getPontuacao());
-            
-            if(turno == 1){
-                setNaipe(cartas.get(codigo).getNaipe());
-            }
-
-            if((maiorCarta ==null)||(cartas.get(codigo).getPontuacao() > maiorCarta.getPontuacao())){
-                setMaiorCarta(cartas.get(codigo));
-                partida.setJogadorProximaRodada( getJogadorDoTurno());
-            };
-            cartas.remove(cartas.get(codigo)); 
+            getJogador().get(indiceJogador).setCartaDoTurno(cartaJogada);            
+            setPontuacao(cartaJogada.getPontuacao());
+            validarVencedorRodada(cartaJogada);   
+            cartas.remove(cartaJogada); 
         });
     }
 }
