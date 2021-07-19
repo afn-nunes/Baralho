@@ -4,7 +4,7 @@ import model.entities.Jogador;
 import model.entities.MotorPartida;
 
 public class App {
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
         
         MotorPartida partida = new PartidaSueca(1);       
         partida.obterJogadores().add(new Jogador(1, "André"));

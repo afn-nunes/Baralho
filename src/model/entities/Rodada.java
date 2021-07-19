@@ -121,7 +121,7 @@ public class Rodada {
     
     public void iniciar(Scanner sc){
         turnos.forEach(turno ->{        
-            Funcoes.limparTela();                               
+            Funcoes.limparTela();                    
             setTurno(turno);
 
             if((partida.getRodadas().indexOf(this) == 0) && (getTurno() == 1)){

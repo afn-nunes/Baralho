@@ -136,7 +136,7 @@ public class PartidaSueca implements MotorPartida{
         return "************ PARTIDA " + getCodigo() + " - Trunfo: " + getCartaTrunfo() + " ************\n" ;        
     }
 
-    public void iniciarjogo(){
+    public void iniciarjogo() {
         Scanner sc = new Scanner(System.in);
 
         while (rodadas.size() < 10){        
