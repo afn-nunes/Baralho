@@ -5,14 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-import classes.Carta;
-import classes.Enums.CartasSueca;
-import classes.Enums.NaipeCarta;
-import classes.Equipe;
-import classes.Funcoes;
-import classes.Jogador;
-import classes.MotorPartida;
-import classes.Rodada;
+import model.entities.Carta;
+import model.entities.Equipe;
+import model.entities.Funcoes;
+import model.entities.Jogador;
+import model.entities.MotorPartida;
+import model.entities.Rodada;
+import model.enums.Enums.CartasSueca;
+import model.enums.Enums.NaipeCarta;
 
 public class PartidaSueca implements MotorPartida{    
     private int codigo; 
@@ -133,7 +133,7 @@ public class PartidaSueca implements MotorPartida{
     }
 
     public String toString(){
-        return "************ PARTIDA " + getCodigo() + " - Trunfo: " + getCartaTrunfo() + "************\n" ;        
+        return "************ PARTIDA " + getCodigo() + " - Trunfo: " + getCartaTrunfo() + " ************\n" ;        
     }
 
     public void iniciarjogo(){

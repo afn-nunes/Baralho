@@ -1,4 +1,4 @@
-package classes;
+package model.enums;
 
 public class Enums {
     public enum CartasSueca{

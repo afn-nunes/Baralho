@@ -1,9 +1,9 @@
-package classes;
+package model.entities;
 
-import classes.Enums.NaipeCarta;
-import classes.Enums.CartasSueca;
+import model.enums.Enums.CartasSueca;
+import model.enums.Enums.NaipeCarta;
 
-public class Carta {
+public class Carta {    
     private CartasSueca numero;
     private NaipeCarta naipe;   
     private int pontuacao;

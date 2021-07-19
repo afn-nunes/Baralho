@@ -1,12 +1,13 @@
-package classes;
+package model.entities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import app.PartidaSueca;
-import classes.Enums.NaipeCarta;
+import model.enums.Enums.NaipeCarta;
 
 public class Rodada {          
     private int turno;
@@ -17,6 +18,7 @@ public class Rodada {
     private Carta cartadoTurno;
     private Carta maiorCarta;
     private Carta cartaDeCorte;
+    private Carta cartaJogada;
     private int pontuacao;
     private NaipeCarta naipe;
     private PartidaSueca partida;
@@ -125,37 +127,43 @@ public class Rodada {
             if((partida.getRodadas().indexOf(this) == 0) && (getTurno() == 1)){
                 partida.setJogadorProximaRodada(getJogador().get((int) Math.random() * 4));
             }
-
             setJogadorDoTurno();
-
             int indiceJogador = getJogador().indexOf(getJogadorDoTurno());
             List<Carta> cartas = getJogador().get(indiceJogador).getListaDeCartas();
-
             if((partida.getRodadas().indexOf(this) == 0) && (getTurno() == 1)){
                 partida.setCartaTrunfo(cartas.get((int) Math.random() * cartas.size()).getNaipe());
             }
 
-            
+            boolean cartaEncontrada = false;
+            do{          
+                System.out.println(partida);
+                partida.imprimirMesa();           
+                System.out.printf("Rodada: %s - Turno: %s - Jogador: %s \n\n",  partida.getRodadas().indexOf(this) + 1,  getTurno(),  getJogadorDoTurno());                                                            
+                System.out.printf("%s - Informe o código da carta: \n",  getJogadorDoTurno());
 
-            System.out.println(partida);
-            partida.imprimirMesa();
-            System.out.printf("Rodada: %s - Turno: %s - Jogador: %s \n\n",  partida.getRodadas().indexOf(this) + 1,  getTurno(),  getJogadorDoTurno());                                                            
-            System.out.printf("%s - Informe o código da carta: \n",  getJogadorDoTurno());
-
-            if((turno == 1)||(!(cartas.stream().anyMatch(c -> c.getNaipe() == getNaipe())))){
-                cartas.stream().forEach(c -> System.out.println((int )(cartas.indexOf(c)  + 1 ) + " - " + c));
-            }else {
-                cartas.stream().filter(c -> c.getNaipe() == getNaipe()).forEach(c -> System.out.println((int )(cartas.indexOf(c)  + 1 ) + " - " + c));
-            }
-            
-            int codigo = sc.nextInt() -1;
-            Carta cartaJogada = cartas.get(codigo);
-            sc.nextLine();
-
-            getJogador().get(indiceJogador).setCartaDoTurno(cartaJogada);            
-            setPontuacao(cartaJogada.getPontuacao());
-            validarVencedorRodada(cartaJogada);   
-            cartas.remove(cartaJogada); 
+                List<Carta> cartasDoTurno = new ArrayList<>();
+                if((turno == 1)||(!(cartas.stream().anyMatch(c -> c.getNaipe() == getNaipe())))){
+                    cartasDoTurno = cartas.stream().collect(Collectors.toList());
+                }else {
+                    cartasDoTurno = cartas.stream().filter(c -> c.getNaipe() == getNaipe()).collect(Collectors.toList());
+                }
+               cartasDoTurno.forEach(c -> System.out.printf("%s - %s DE %s\n", cartas.indexOf(c) + 1, c.getNumero(), c.getNaipe()));
+                int codigo = sc.nextInt() -1;
+                
+                sc.nextLine();
+                if (cartasDoTurno.stream().anyMatch(c -> (cartas.indexOf(c)  == codigo))){
+                    this.cartaJogada = cartas.get(codigo); 
+                    getJogador().get(indiceJogador).setCartaDoTurno(cartaJogada);            
+                    setPontuacao(cartaJogada.getPontuacao());
+                    validarVencedorRodada(cartaJogada);   
+                    cartas.remove(cartaJogada);
+                    cartaEncontrada = true;
+                }else{
+                    System.out.println("\nNúmero da carta inválido");
+                    sc.nextLine();
+                    Funcoes.limparTela();
+                }
+            }while(!cartaEncontrada) ;       
         });
     }
 }

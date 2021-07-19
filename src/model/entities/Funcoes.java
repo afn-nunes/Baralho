@@ -1,4 +1,4 @@
-package classes;
+package model.entities;
 
 public class Funcoes {
     public static void limparTela(){
